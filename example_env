@@ -1,0 +1,5 @@
+SECRET_KEY=django-insecure-f46j)7b-(onif_t$qdqc(bu3^$%3a5#6yb@3d61c&822jiy0yw
+DEBUG=True
+EMAIL_HOST_USER=e-mail
+EMAIL_HOST_PASSWORD=email_Password
+SITE_ID=your site ID in your Sites model

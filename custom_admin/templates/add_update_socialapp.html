@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ action }} Social Application</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f6f9;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            background: #fff;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 400px;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 20px;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+        label {
+            font-size: 14px;
+            margin-bottom: 5px;
+            color: #555;
+        }
+        input, select, button {
+            padding: 10px;
+            margin-bottom: 15px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            font-size: 14px;
+        }
+        input:focus, select:focus {
+            border-color: #4CAF50;
+            outline: none;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .back-link {
+            text-align: center;
+            margin-top: 10px;
+        }
+        .back-link a {
+            color: #007BFF;
+            text-decoration: none;
+        }
+        .back-link a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>{{ action }} Social Application</h1>
+        <form method="POST">
+            {% csrf_token %}
+            <label for="name">Application Name</label>
+            <input type="text" id="name" name="name" value="{{ social_app.name }}" required>
+
+            <label for="client_id">Client ID</label>
+            <input type="text" id="client_id" name="client_id" value="{{ social_app.client_id }}" required>
+
+            <label for="secret">Secret Key</label>
+            <input type="text" id="secret" name="secret" value="{{ social_app.secret }}" required>
+
+            <label for="provider">Provider</label>
+            <select id="provider" name="provider" required>
+                <option value="">-- Select Provider --</option>
+                <option value="google" {% if social_app.provider == "google" %}selected{% endif %}>Google</option>
+                <option value="facebook" {% if social_app.provider == "facebook" %}selected{% endif %}>Facebook</option>
+                <option value="twitter" {% if social_app.provider == "twitter" %}selected{% endif %}>Twitter</option>
+                <!-- Add more providers as needed -->
+            </select>
+
+            <button type="submit">{{ action }} Application</button>
+        </form>
+        <div class="back-link">
+            <a href="{% url 'superadmin' %}">Back to Dashboard</a>
+        </div>
+    </div>
+</body>
+</html>

@@ -9,6 +9,7 @@ https://docs.djangoproject.com/en/5.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.1/ref/settings/
 """
+import os
 from pathlib import Path
 from decouple import config
 
@@ -57,7 +58,7 @@ ROOT_URLCONF = 'taskmanager.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -140,10 +141,13 @@ AUTHENTICATION_BACKENDS = [
     "allauth.account.auth_backends.AuthenticationBackend",
 ]
 
-SITE_ID = 4
+SITE_ID = config('SITE_ID', cast=int) # keep the site ID in your sites model
 
-LOGIN_REDIRECT_URL = "/"
+LOGIN_REDIRECT_URL = "/accounts/login/"
 LOGOUT_REDIRECT_URL = "/"
+ACCOUNT_LOGOUT_REDIRECT_URL = "/"
+ACCOUNT_ADAPTER = "tasks.adapters.CustomAccountAdapter"
+
 
 SOCIAL_AUTH_GOOGLE_OAUTH2_SCOPE = ['email', 'profile']
 SOCIALACCOUNT_AUTO_SIGNUP = True
@@ -168,3 +172,18 @@ SOCIALACCOUNT_PROVIDERS = {
         }
     }
 }
+
+
+
+# Email Backend
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+
+# SMTP Configuration
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+
+# Your Gmail Credentials
+EMAIL_HOST_USER = config('EMAIL_HOST_USER')  # Replace with your Gmail address
+EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
